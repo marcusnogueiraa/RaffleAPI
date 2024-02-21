@@ -17,14 +17,14 @@ public class Raffle {
     private Integer ticketsAvailable;
 
     @DBRef
-    private List<Ticket> ticketsList;
+    private List<Ticket> ticketsList;;
 
-    public Raffle(String title, String description, Integer numberOfTickets, Integer ticketsAvailable, List<Ticket> ticketsList){
+    public Raffle(String title, String description, Integer numberOfTickets, Integer ticketsAvailable){
         this.title = title;
         this.description = description;
         this.numberOfTickets = numberOfTickets;
         this.ticketsAvailable = ticketsAvailable;
-        this.ticketsList = ticketsList;
+        this.ticketsList = new ArrayList<>();
     }
 
     public String getTitle(){
@@ -58,5 +58,10 @@ public class Raffle {
     public void setTicketsAvailable(Integer ticketsAvaiable){
         this.ticketsAvailable = ticketsAvaiable;
     }
+
+    public List<Ticket> getTicketsList(){
+        return this.ticketsList;
+    }
+
 
 }
