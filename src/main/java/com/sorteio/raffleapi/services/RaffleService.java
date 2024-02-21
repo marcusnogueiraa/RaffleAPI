@@ -18,7 +18,7 @@ public class RaffleService {
         return raffleRepository.findAll();
     }
 
-    public Raffle getRaffleById(String id){
+    public Raffle getRaffleById(Long id){
         Optional<Raffle> searchedRaffle = raffleRepository.findById(id);
         return searchedRaffle.orElse(null);
     }
@@ -31,7 +31,7 @@ public class RaffleService {
         raffleRepository.save(raffle);
     }
 
-    public void deleteRaffleById(String id){
+    public void deleteRaffleById(Long id){
         raffleRepository.deleteById(id);
     }
 }

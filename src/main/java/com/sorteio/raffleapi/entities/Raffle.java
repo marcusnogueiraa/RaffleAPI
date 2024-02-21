@@ -1,12 +1,9 @@
 package com.sorteio.raffleapi.entities;
 
-import java.util.List;
-import java.util.ArrayList;
+import jakarta.persistence.Table;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Raffles")
+@Table(name = "Raffles")
 public class Raffle {
     
     @Id
@@ -16,15 +13,11 @@ public class Raffle {
     private Integer numberOfTickets;
     private Integer ticketsAvailable;
 
-    @DBRef
-    private List<Ticket> ticketsList;;
-
     public Raffle(String title, String description, Integer numberOfTickets, Integer ticketsAvailable){
         this.title = title;
         this.description = description;
         this.numberOfTickets = numberOfTickets;
         this.ticketsAvailable = ticketsAvailable;
-        this.ticketsList = new ArrayList<>();
     }
 
     public String getTitle(){
@@ -58,10 +51,5 @@ public class Raffle {
     public void setTicketsAvailable(Integer ticketsAvaiable){
         this.ticketsAvailable = ticketsAvaiable;
     }
-
-    public List<Ticket> getTicketsList(){
-        return this.ticketsList;
-    }
-
 
 }

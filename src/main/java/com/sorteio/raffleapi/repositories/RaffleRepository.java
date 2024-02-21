@@ -1,6 +1,6 @@
 package com.sorteio.raffleapi.repositories;
 
 import com.sorteio.raffleapi.entities.Raffle;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RaffleRepository extends MongoRepository<Raffle, String> {}
+public interface RaffleRepository extends JpaRepository<Raffle, Id> {}

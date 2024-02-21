@@ -1,13 +1,13 @@
 package com.sorteio.raffleapi.entities;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Table;
 
-@Document(collection = "Tickets")
+@Table(name = "Tickets")
 public class Ticket {
     
     @Id
-    private String id;
+    private Long id;
     private String number;
     private String buyerName;
     private String sellerName;

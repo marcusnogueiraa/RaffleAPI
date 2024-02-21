@@ -18,12 +18,8 @@ public class TicketService {
     private RaffleRepository raffleRepository;
     private TicketRepository ticketRepository;
 
-    public List<Ticket> getAllTicketsOfaRafflle(String raffleId){
-        Optional<Raffle> searchedRaffle = raffleRepository.findById(raffleId);
-
-        if (searchedRaffle.isPresent())
-            return searchedRaffle.get().getTicketsList();
-    
+    public List<Ticket> getAllTicketsOfaRafflle(Long raffleId){
+        // TODO: Make this function;
         return new ArrayList<>();
     }
 
