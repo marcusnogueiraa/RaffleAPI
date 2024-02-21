@@ -10,10 +10,12 @@ public class Ticket {
     private String id;
     private String number;
     private String buyerName;
+    private String sellerName;
 
-    public Ticket(String number, String buyerName){
+    public Ticket(String number, String buyerName, String sellerName){
         this.number = number;
         this.buyerName = buyerName;
+        this.sellerName = sellerName;
     }
 
     public String getNumber(){
@@ -30,6 +32,14 @@ public class Ticket {
 
     public void setBuyerName(String buyerName){
         this.buyerName = buyerName;
+    }
+
+    public String getSellerName(){
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName){
+        this.sellerName = sellerName;
     }
 
 }
