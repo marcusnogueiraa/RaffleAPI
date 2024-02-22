@@ -1,23 +1,41 @@
 package com.sorteio.raffleapi.entities;
 
-import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
 @Table(name = "Raffles")
 public class Raffle {
     
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 50)
     private String title;
+
+    @Column(length = 250)
     private String description;
+
     private Integer numberOfTickets;
     private Integer ticketsAvailable;
 
-    public Raffle(String title, String description, Integer numberOfTickets, Integer ticketsAvailable){
+    @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
+
+    public Raffle(String title, String description, Integer numberOfTickets){
         this.title = title;
         this.description = description;
         this.numberOfTickets = numberOfTickets;
-        this.ticketsAvailable = ticketsAvailable;
+        this.ticketsAvailable = numberOfTickets;
     }
 
     public String getTitle(){
@@ -48,8 +66,8 @@ public class Raffle {
         return ticketsAvailable;
     }
 
-    public void setTicketsAvailable(Integer ticketsAvaiable){
-        this.ticketsAvailable = ticketsAvaiable;
+    public void setTicketsAvailable(Integer ticketsAvailable){
+        this.ticketsAvailable = ticketsAvailable;
     }
 
 }
