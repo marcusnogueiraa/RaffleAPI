@@ -2,6 +2,9 @@ package com.sorteio.raffleapi.entities;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,23 +22,37 @@ public class Raffle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     @Column(length = 50)
     private String title;
 
-    @Column(length = 250)
+    @NotEmpty
+    @Column(length = 300)
     private String description;
 
+    @Positive
+    @NotNull
     private Integer numberOfTickets;
     private Integer ticketsAvailable;
 
     @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
+    public Raffle(){}
+
     public Raffle(String title, String description, Integer numberOfTickets){
         this.title = title;
         this.description = description;
         this.numberOfTickets = numberOfTickets;
         this.ticketsAvailable = numberOfTickets;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public Long getId(){
+        return this.id;
     }
 
     public String getTitle(){
