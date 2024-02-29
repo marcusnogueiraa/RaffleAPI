@@ -23,18 +23,25 @@ public class RaffleService {
 
     public Raffle getRaffleById(Long id){
         Optional<Raffle> searchedRaffle = raffleRepository.findById(id);
-        return searchedRaffle.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Raffle not found with ID: " + id));
+        return searchedRaffle.orElse(null);
     }
 
     public Raffle createRaffle(Raffle raffle){
         return raffleRepository.save(raffle);
     }
 
-    public void updateRaffle(Raffle raffle){
-        raffleRepository.save(raffle);
+    public Raffle updateRaffle(Raffle raffle){
+        return raffleRepository.save(raffle);
     }
 
-    public void deleteRaffleById(Long id){
-        raffleRepository.deleteById(id);
+    public Boolean deleteRaffleById(Long id){
+        Optional<Raffle> searchedRaffle = raffleRepository.findById(id);
+
+        if (searchedRaffle.isPresent()){
+            raffleRepository.delete(searchedRaffle.get());
+            return true;
+        } 
+
+        return false;
     }
 }

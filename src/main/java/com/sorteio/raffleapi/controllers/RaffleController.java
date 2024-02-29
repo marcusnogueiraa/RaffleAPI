@@ -1,8 +1,15 @@
 package com.sorteio.raffleapi.controllers;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 import com.sorteio.raffleapi.entities.Raffle;
+
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,22 +34,35 @@ public class RaffleController {
     }
 
     @GetMapping("/{id}")
-    public Raffle getAllRaffleById(@PathVariable("id") Long id){
-        return raffleService.getRaffleById(id);
+    public ResponseEntity<Raffle> getAllRaffleById(@PathVariable("id") Long id){
+        Raffle searchedRaffle = raffleService.getRaffleById(id);
+        
+        if (searchedRaffle == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(searchedRaffle);
+        }
     }
 
     @PostMapping
-    public Raffle createRaffle(@RequestBody Raffle raffle){
-        return raffleService.createRaffle(raffle);
+    public ResponseEntity<Raffle> createRaffle(@RequestBody @Valid Raffle raffle){
+        Raffle createdRaffle = raffleService.createRaffle(raffle);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdRaffle);
     }
 
     @PutMapping
-    public void updateRaffle(@RequestBody Raffle raffle){
-        raffleService.updateRaffle(raffle);
+    public Raffle updateRaffle(@RequestBody @Valid Raffle raffle){
+        return raffleService.updateRaffle(raffle);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteRaffleById(@PathVariable("id") Long id){
-        raffleService.deleteRaffleById(id);
+    public ResponseEntity<Void> deleteRaffleById(@PathVariable("id") Long id){
+        Boolean hasDeleted = raffleService.deleteRaffleById(id);
+
+        if (hasDeleted){    
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }

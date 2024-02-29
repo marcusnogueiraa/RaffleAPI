@@ -1,5 +1,8 @@
 package com.sorteio.raffleapi.entities;
 
+import com.sorteio.raffleapi.entities.User;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.validation.constraints.NotEmpty;
@@ -11,40 +14,52 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Raffles")
 public class Raffle {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    @Column(length = 50)
+    @NotEmpty @Column(length = 50)
     private String title;
 
-    @NotEmpty
-    @Column(length = 300)
+    @NotEmpty @Column(length = 300)
     private String description;
 
-    @Positive
-    @NotNull
+    @Positive @NotNull
     private Integer numberOfTickets;
+
     private Integer ticketsAvailable;
 
+    @ManyToOne @JoinColumn(name = "admin_id")
+    private User admin;
+
     @OneToMany(mappedBy = "raffle", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+    private List<Ticket> tickets = new ArrayList<>();
+
+    @ManyToMany
+    private List<User> sellers = new ArrayList<>();
 
     public Raffle(){}
 
     public Raffle(String title, String description, Integer numberOfTickets){
         this.title = title;
         this.description = description;
-        this.numberOfTickets = numberOfTickets;
-        this.ticketsAvailable = numberOfTickets;
+        this.numberOfTickets = (numberOfTickets != null) ? numberOfTickets : 0;
+    }
+
+    @PrePersist
+    private void prePersist() {
+        this.ticketsAvailable = (numberOfTickets != null) ? numberOfTickets : 0;
     }
 
     public void setId(Long id){
