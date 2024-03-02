@@ -14,7 +14,7 @@ import com.sorteio.raffleapi.entities.Ticket;
 import com.sorteio.raffleapi.services.TicketService;
 
 @RestController
-@RequestMapping("api/raffles/{raffleId}/tickets")
+@RequestMapping("api/private/raffles/{raffleId}/tickets")
 public class TicketController {
 
     @Autowired

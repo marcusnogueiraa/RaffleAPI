@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sorteio.raffleapi.services.RaffleService;
 
 @RestController
-@RequestMapping("api/raffles")
+@RequestMapping("api/private/raffles")
 public class RaffleController {
     
     @Autowired
